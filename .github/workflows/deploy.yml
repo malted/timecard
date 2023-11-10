@@ -20,7 +20,7 @@ jobs:
     - name: Install rsync and sshpass
       run: |
         sudo apt-get update
-        sudo apt-get install -y wireguard rsync sshpass
+        sudo apt-get install -y wireguard resolvconf rsync sshpass
 
     - name: Set up WireGuard VPN
       env:
