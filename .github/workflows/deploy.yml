@@ -20,7 +20,15 @@ jobs:
     - name: Install rsync and sshpass
       run: |
         sudo apt-get update
-        sudo apt-get install -y rsync sshpass
+        sudo apt-get install -y wireguard rsync sshpass
+
+    - name: Set up WireGuard VPN
+      env:
+        WG_CONFIG: ${{ secrets.WG_CONFIG }}
+      run: |
+        echo "$WG_CONFIG" | sudo tee /etc/wireguard/wg0.conf
+        sudo wg-quick up wg0
+        sudo wg show
 
     - name: Rsync binary to remote server with SSH password
       env:
