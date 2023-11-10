@@ -35,3 +35,8 @@ jobs:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       run: |
         sshpass -p "$SSH_PASSWORD" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" ./target/release/timecard ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+    - name: Tear down VPN connection
+      if: always()
+      run: |
+        sudo wg-quick down wg0
